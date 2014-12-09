@@ -19,7 +19,7 @@ void makePath(Node** cameFrom, Node* current);
 void nodePush(Node data, Node* nodeArray);
 Node nodePop(Node* nodeArray);
 Node nodePopNum(Node* nodeArray, int index);
-int lowestFScore(Node* setToCheck, int** fScoreTable);
+int lowestFScore(Node* setToCheck, int fScoreTable[X_SIZE][Y_SIZE]);
 int isInSet(Node testNode, Node* testSet);
 void printPath();
 
@@ -129,7 +129,7 @@ int isInSet(Node testNode, Node* testSet){
 	return 0;
 }
 
-int lowestFScore(Node* setToCheck, int** fScoreTable){
+int lowestFScore(Node* setToCheck, int fScoreTable[X_SIZE][Y_SIZE]){
 	int i=0;
 	int minIndex = INF;
 	int minVal = INF;
