@@ -13,6 +13,10 @@ Node globalPath[X_SIZE * Y_SIZE];
 //Make global List of Obstacle'd Nodes
 int obstacleMap[X_SIZE][Y_SIZE] = {0};
 //obstacleMap[2][3] = 1;
+/*
+obstacleMap[9][4] = 1;
+obstacleMap[4][9] = 1;
+*/
 
 int hScore(int xStart, int yStart, int xEnd, int yEnd);
 void makePath(Node cameFrom[X_SIZE][Y_SIZE], Node* current);
@@ -239,12 +243,28 @@ void makePath(Node cameFrom[X_SIZE][Y_SIZE], Node* current){
 
 
 int main(){
+	obstacleMap[1][0] = 1;
+	obstacleMap[2][1] = 1;
+	obstacleMap[3][1] = 1;
+	obstacleMap[4][1] = 1;
+	obstacleMap[1][2] = 1;
+	obstacleMap[5][2] = 1;
+	obstacleMap[3][3] = 1;
+	obstacleMap[5][3] = 1;
+	obstacleMap[0][4] = 1;
+	obstacleMap[1][4] = 1;
+	obstacleMap[2][4] = 1;
+	obstacleMap[5][4] = 1;
+	obstacleMap[5][5] = 1;
+	obstacleMap[5][6] = 1;
+	obstacleMap[5][7] = 1;
+	obstacleMap[5][8] = 1;
 	Node start;
 	Node end;
-	start.x = 0;
-	start.y = 0;
-	end.x = 9;
-	end.y = 9;
+	start.x = 1;
+	start.y = 1;
+	end.x = 7;
+	end.y = 4;
 	if(1==AStar(start,end)){
 		printPath();
 	}
