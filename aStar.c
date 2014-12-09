@@ -27,6 +27,24 @@ int lowestFScore(Node* setToCheck, int fScoreTable[X_SIZE][Y_SIZE]);
 int isInSet(Node testNode, Node* testSet);
 void printPath();
 
+void reversePath(){
+	int i=0;
+	int j=0;
+	for(j=0;globalPath[j].x != INF;j++){}
+	j--;
+	Node temp;
+	while(i<=j){
+		temp.x = globalPath[j].x;
+		temp.y = globalPath[j].y;
+		globalPath[j].x = globalPath[i].x;
+		globalPath[j].y = globalPath[i].y;
+		globalPath[i].x = temp.x;
+		globalPath[i].y = temp.y;
+		j--;
+		i++;
+	}
+}
+
 void printPath(){
 	int place=0;
 	while(globalPath[place].x != INF){
@@ -79,6 +97,7 @@ int AStar(Node start, Node end){
 		printf("current: {x=%d,y=%d}\n",current.x,current.y);
 		if(current.x == end.x && current.y == end.y){
 			makePath(cameFrom,&current);		
+			reversePath();
 			return 1;
 		}
 		nodePopNum(workingSet,lowestIndex);
