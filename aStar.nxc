@@ -1,3 +1,32 @@
+#define X_SIZE 10
+#define Y_SIZE 10
+#define INF 9999999
+
+//Variable Declarations
+struct Node{int x;int y;};
+Node globalPath[X_SIZE * Y_SIZE];
+int obstacleMap[X_SIZE][Y_SIZE] = {0};
+
+/*
+ * Add Obstacles like so:
+ * obstacleMap[2][3] = 1;
+ */
+
+//Function Declarations
+/*
+int hScore(int xStart, int yStart, int xEnd, int yEnd);
+void makePath(Node cameFrom[X_SIZE][Y_SIZE], Node* current);
+void nodePush(Node data, Node* nodeArray);
+Node nodePop(Node* nodeArray);
+Node nodePopNum(Node* nodeArray, int index);
+int lowestFScore(Node testNode, Node* testSet);
+*/
+
+
+
+
+
+
 task main(){
 	TextOut(0,0,"Hello World!");
 	Wait(1000);
