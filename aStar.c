@@ -2,7 +2,7 @@
 
 #define X_SIZE 10
 #define Y_SIZE 10
-#define INF 999999
+#define INF 9999999
 
 typedef struct NodeStruct{
 	int x;
@@ -15,7 +15,7 @@ int obstacleMap[X_SIZE][Y_SIZE] = {0};
 //obstacleMap[2][3] = 1;
 
 int hScore(int xStart, int yStart, int xEnd, int yEnd);
-void makePath(Node** cameFrom, Node* current);
+void makePath(Node cameFrom[X_SIZE][Y_SIZE], Node* current);
 void nodePush(Node data, Node* nodeArray);
 Node nodePop(Node* nodeArray);
 Node nodePopNum(Node* nodeArray, int index);
@@ -27,6 +27,7 @@ void printPath(){
 	int place=0;
 	while(globalPath[place].x != INF){
 		printf("(%d,%d) ",globalPath[place].x,globalPath[place].y);
+		place++;
 	}
 	printf("\n");
 }
@@ -61,7 +62,7 @@ int AStar(Node start, Node end){
 	int fScore[X_SIZE][Y_SIZE];
 	for(i=0;i<X_SIZE;i++){
 		for(j=0;j<Y_SIZE;j++){
-			gScore[i][j] = INF;
+			gScore[i][j] = 0;
 			fScore[i][j] = INF;
 		}
 	}
@@ -71,12 +72,13 @@ int AStar(Node start, Node end){
 	while(workingSet[0].x != INF){
 		lowestIndex = lowestFScore(workingSet,fScore);
 		current = workingSet[lowestIndex];
+		printf("current: {x=%d,y=%d}\n",current.x,current.y);
 		if(current.x == end.x && current.y == end.y){
-			makePath(&cameFrom,&current);		
+			makePath(cameFrom,&current);		
 			return 1;
 		}
-		nodePopNum(&workingSet,lowestIndex);
-		nodePush(current,&finishedSet);
+		nodePopNum(workingSet,lowestIndex);
+		nodePush(current,finishedSet);
 		int i=0;
 		Node neighbor;
 		for(i=0;i<4;i++){
@@ -84,21 +86,33 @@ int AStar(Node start, Node end){
 				case 0:
 					neighbor.x = current.x+1;
 					neighbor.y = current.y;
+					if(neighbor.x >= X_SIZE){
+						neighbor.x = current.x;
+					}
 					break;
 				case 1:
 					neighbor.x = current.x-1;
 					neighbor.y = current.y;
+					if(neighbor.x < 0){
+						neighbor.x = current.x;
+					}
 					break;
 				case 2:
 					neighbor.x = current.x;
 					neighbor.y = current.y+1;
+					if(neighbor.y >= Y_SIZE){
+						neighbor.y = current.y;
+					}
 					break;
 				case 3:
 					neighbor.x = current.x;
 					neighbor.y = current.y-1;
+					if(neighbor.y < 0){
+						neighbor.y = current.y;
+					}
 					break;
 			}
-			if(isInSet(neighbor,&finishedSet) == 1){}
+			if(isInSet(neighbor,finishedSet) == 1){}
 			else if(obstacleMap[neighbor.x][neighbor.y] == 1){}
 			else{
 				int tempGScore = gScore[current.x][current.y] + 1;
@@ -125,14 +139,15 @@ int isInSet(Node testNode, Node* testSet){
 		if(testNode.x == testSet[z].x && testNode.y == testSet[z].y){
 			return 1;
 		}
+		z++;
 	}
 	return 0;
 }
 
 int lowestFScore(Node* setToCheck, int fScoreTable[X_SIZE][Y_SIZE]){
 	int i=0;
-	int minIndex = INF;
-	int minVal = INF;
+	int minIndex = 0;
+	int minVal = setToCheck[0].x;
 	while(setToCheck[i].x != INF){
 		if(fScoreTable[setToCheck[i].x][setToCheck[i].y] < minVal){
 			minVal = fScoreTable[setToCheck[i].x][setToCheck[i].y];
@@ -194,7 +209,7 @@ int hScore(int xStart, int yStart, int xEnd, int yEnd){
 
 //Returns a path in an array of Node's once algorithm is finished
 
-/*Node**/void makePath(Node** cameFrom, Node* current){
+void makePath(Node cameFrom[X_SIZE][Y_SIZE], Node* current){
 	//Node path[X_SIZE * Y_SIZE];
 	Node temp;
 	Node clearNode;
