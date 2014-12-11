@@ -26,6 +26,37 @@ Node nodePopNum(Node* nodeArray, int index);
 int lowestFScore(Node* setToCheck, int fScoreTable[X_SIZE][Y_SIZE]);
 int isInSet(Node testNode, Node* testSet);
 void printPath();
+void showMap();
+
+void showMap(){
+	int objMap[X_SIZE][Y_SIZE] = {0};
+	int i,j;
+	for(i=0;i<X_SIZE;i++){
+		for(j=0;j<Y_SIZE;j++){
+			objMap[i][j] = obstacleMap[i][j];
+		}
+	}
+	for(i=0;globalPath[i].x != INF;i++){
+		objMap[globalPath[i].x][globalPath[i].y] = 2;
+	}
+	for(i=0;i<X_SIZE;i++){
+		for(j=0;j<Y_SIZE;j++){
+			switch(objMap[i][j]){
+				case 0:
+					printf(". ");
+					break;
+				case 1:
+					printf("# ");
+					break;
+				case 2:
+					printf("0 ");
+					break;
+			}
+		}
+		printf("\n");
+	}
+
+}
 
 void reversePath(){
 	int i=0;
@@ -261,7 +292,19 @@ void makePath(Node cameFrom[X_SIZE][Y_SIZE], Node* current){
 
 
 
-int main(){
+int main(int argc, char** argv){
+	Node start;
+	Node end;
+	start.x = 1;
+	start.y = 4;
+	end.x = 9;
+	end.y = 9;
+	if(argc == 5){
+		start.x = atoi(argv[1]);
+		start.y = atoi(argv[2]);
+		end.x = atoi(argv[3]);
+		end.y = atoi(argv[4]);
+	}
 	obstacleMap[1][0] = 1;
 	obstacleMap[2][1] = 1;
 	obstacleMap[3][1] = 1;
@@ -278,14 +321,10 @@ int main(){
 	obstacleMap[5][6] = 1;
 	obstacleMap[5][7] = 1;
 	obstacleMap[5][8] = 1;
-	Node start;
-	Node end;
-	start.x = 1;
-	start.y = 1;
-	end.x = 7;
-	end.y = 4;
 	if(1==AStar(start,end)){
 		printPath();
+		printf("\n");
+		showMap();
 	}
 	else{
 		printf("AStar Didn't work, PANIC!\n");
