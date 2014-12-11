@@ -27,6 +27,7 @@ int lowestFScore(Node* setToCheck, int fScoreTable[X_SIZE][Y_SIZE]);
 int isInSet(Node testNode, Node* testSet);
 void printPath();
 void showMap();
+void reversePath();
 
 void showMap(){
 	int objMap[X_SIZE][Y_SIZE] = {0};
