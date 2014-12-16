@@ -305,7 +305,7 @@ int main(int argc, char** argv){
 		start.y = atoi(argv[2]);
 		end.x = atoi(argv[3]);
 		end.y = atoi(argv[4]);
-	}
+	}/*
 	obstacleMap[1][0] = 1;
 	obstacleMap[2][1] = 1;
 	obstacleMap[3][1] = 1;
@@ -322,7 +322,7 @@ int main(int argc, char** argv){
 	obstacleMap[5][6] = 1;
 	obstacleMap[5][7] = 1;
 	obstacleMap[5][8] = 1;
-	if(1==AStar(start,end)){
+	*/if(1==AStar(start,end)){
 		printPath();
 		printf("\n");
 		showMap();
