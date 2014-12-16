@@ -315,10 +315,13 @@ void updateLCD() {
 // 90 degree right turn
 void right() {
 	OnFwd(OUT_A,-125);
+	//OnFwd(OUT_A,-150);
 	OnFwd(OUT_C,90);
-	Wait(380);
+	//Wait(380);
+	Wait(390);
 	Off(OUT_AC);
-	Wait(500);
+	//Wait(500);
+	Wait(100);
 	switch(direction) {
 		case "N":
 			direction = "E";
@@ -338,10 +341,12 @@ void right() {
 // 90 degee left turn
 void left() {
 	OnFwd(OUT_A,90);
+	//OnFwd(OUT_C,-150);
 	OnFwd(OUT_C,-125);
-	Wait(380);
+	Wait(390);
 	Off(OUT_AC);
-	Wait(500);
+	//Wait(500);
+	Wait(100);
 	switch(direction) {
 		case "N":
 			direction = "W";
@@ -364,12 +369,12 @@ int forward() {
 	bool obstFound = false;
 	while(distance < 2700 && !obstFound) {
 		if(wobble == 1) {
-			OnRev(OUT_A, 53);
-			OnRev(OUT_C, 50);
+			OnRev(OUT_A, 55.5);
+			OnRev(OUT_C, 48);
 			wobble = 0;
 		} else {
-			OnRev(OUT_A, 51);
-			OnRev(OUT_C, 50);
+			OnRev(OUT_A, 55.5);
+			OnRev(OUT_C, 48);
 			wobble = 1;
 		}
 		//OnRevSync(OUT_AC, 50, 0);
@@ -395,7 +400,8 @@ int forward() {
 			// reverse slightly
 			OnFwd(OUT_A, 51.8);
 			OnFwd(OUT_C, 50);
-			Wait(400);
+			//Wait(400);
+			Wait(390);
 			Off(OUT_AC);
 			// return
 			return -1;
@@ -404,7 +410,7 @@ int forward() {
 	}
 	Off(OUT_AC);
 	// time between tiles
-	Wait(500);
+	Wait(100);
 	// if no obstacle found, update location info & map
 	if(!obstFound) {
 		// add to current path
@@ -535,6 +541,7 @@ task main() {
 
 	// initialize the map, flag known obstacles, & update LCD
 	initializeMap();
+	
 	flag(4,5);
 	flag(4,4);
 	flag(4,3);
@@ -543,6 +550,18 @@ task main() {
 	flag(2,2);
 	flag(5,2);
 	flag(6,2);
+	
+	/*
+	flag(3,3);
+	flag(3,4);
+	flag(4,3);
+	flag(4,4);
+	flag(5,3);
+	flag(5,4);
+	*/
+
+	
+
 	updateLCD();
 
 	// create start and end nodes
